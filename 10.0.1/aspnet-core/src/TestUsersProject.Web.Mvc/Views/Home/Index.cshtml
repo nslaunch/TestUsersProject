@@ -1,0 +1,96 @@
+﻿@using TestUsersProject.Web.Startup
+@{
+
+	ViewBag.Title = L("HomePage");
+	ViewBag.CurrentPageName = PageNames.Home;
+
+	Layout = "~/Views/Shared/Layout/_LayoutLite.cshtml";
+}
+
+@section scripts
+{
+	<script src="~/view-resources/Views/_Bundles/home-index.min.js" asp-append-version="true"></script>
+	<script src="~/view-resources/Views/Home/Employees.js"></script>
+}
+
+@* <div class="content-header">
+	<div class="container-fluid">
+		<div class="row mb-2">
+			<div class="col-sm-12">
+				<h1 class="m-0 text-dark">@L("HomePage")</h1>
+			</div>
+		</div>
+	</div>
+</div> *@
+<section class="content">
+	<div class="container">
+		<div class="row">
+			<div class="col-12">
+				<p class="container">
+					<h2>Employees Record Management</h2>
+					<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal" onclick="clearTextBox();">
+						Add Employee
+					</button><br /><br />
+					<table class="table table-bordered table-hover table-striped">
+						<thead>
+							<tr class="table-primary">
+								<th>ID</th>
+								<th>Full Name</th>
+								<th>Email</th>
+								<th>Created Date</th>
+								<th>Status</th>
+								<th>Action</th>
+							</tr>
+						</thead>
+						<tbody class="tbody">
+							<!-- Employee records will be populated here -->
+						</tbody>
+					</table>
+				</p>
+
+				<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+					<div class="modal-dialog">
+						<div class="modal-content">
+							<div class="modal-header">
+								<h4 class="modal-title" id="myModalLabel">Add New Employee</h4>
+								<button type="button" class="close" data-dismiss="modal">×</button>
+							</div>
+							<div class="modal-body">
+								<form>
+									<div class="form-group">
+										<label for="EmployeeId">ID</label>
+										<input type="text" class="form-control" id="Id" placeholder="Id" disabled="disabled" />
+									</div>
+									<div class="form-group">
+										<label for="Age">Full Name</label>
+										<input type="text" class="form-control" id="FullName" value="Nitin" placeholder="Full Name" />
+									</div>
+									<div class="form-group">
+										<label for="Name">Email</label>
+										<input type="text" class="form-control" id="Email" value="test@test.com" placeholder="Email" />
+									</div>
+									@* <div class="form-group">
+										<label for="State">Created Date</label>
+										<input type="text" class="form-control" id="CreatedDate" placeholder="CreatedDate" />
+									</div> *@
+									<div class="form-group">
+										<label for="Country">Status</label>
+										<select id="Status" name="Status" class="form-control">
+											<option value="true" selected="selected">Active</option>
+											<option value="false">Inactive</option>
+										</select>
+									</div>
+								</form>
+							</div>
+							<div class="modal-footer">
+								<button type="button" class="btn btn-primary" id="btnAdd" onclick="return Add();">Save</button>
+								<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+							</div>
+						</div>
+					</div>
+				</div>
+
+			</div>
+		</div>
+	</div>
+</section>
