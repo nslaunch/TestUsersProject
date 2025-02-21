@@ -1,0 +1,2 @@
+Code smells
+https://mohamed-hendawy.medium.com/avoiding-code-smells-in-c-best-practices-and-examples-8d1b037871c1

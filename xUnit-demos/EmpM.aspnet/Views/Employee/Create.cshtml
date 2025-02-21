@@ -1,0 +1,71 @@
+﻿@model IEnumerable<EmployeeManagementApp.Models.Department>
+@{
+    ViewBag.Title = "Createt";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Employee Creation</h2>
+<hr />
+
+<br />
+
+<link href="~/Scripts/classic-main-dark.css" rel="stylesheet" />
+<link href="~/Scripts/default-main.css" rel="stylesheet" />
+
+<form method="post">
+    <div class="form-group">
+        <input type="text" name="EmployeeName" placeholder="Enter Employee name" class="form-control">
+    </div>
+    <div class="form-group">
+        <input type="text" name="Designation" placeholder="Enter Employee Designation" class="form-control">
+    </div>
+    <div class="form-group">
+        <input type="text" name="NID" placeholder="Enter Employee NID" class="form-control">
+    </div>
+    <div class="form-group">
+        <input type="date" name="JoiningDate" placeholder="Enter Employee Joining Date" class="form-control">
+    </div>
+
+    <div class="form-group" id="sel" data-departments-url="@Url.Action("GetDepartments", "Employee")">
+        <select id="DepartmentId" name="DepartmentId" class="form-control">
+            <option value="0">-Select-</option>
+        </select>
+    </div>
+    <div class="form-group">
+        <select class="form-control" name="BloodGroup" id="BloodGroup">
+            <option value="0">-Select-</option>
+            <option value="A+">A+</option>
+            <option value="B+">B+</option>
+            <option value="AB+">AB+</option>
+            <option value="O+">O+</option>
+            <option value="A-">A-</option>
+            <option value="B+">B-</option>
+            <option value="O-">O-</option>
+        </select>
+
+    </div>
+    <br/>
+    <input type="submit" class="btn btn-success" />
+
+</form>
+@{
+    if (ViewBag.IsSaved == "Error")
+    {
+        <h2 style="color:red">Employee inserted ERROR</h2>
+    }
+
+}
+@*<button id="kendoButton" class="k-button">Click Me</button>*@
+
+
+
+<!-- Kendo UI Scripts -->
+<script src="https://code.jquery.com/jquery-3.4.1.min.js" defer></script>
+<script src="https://unpkg.com/jszip/dist/jszip.min.js"></script>
+
+<script src="~/Scripts/kendo.all.min.js" defer></script>
+<script src="~/Scripts/kendo-ui-license.js" defer></script>
+
+
+<script src="~/Scripts/Employee.js" defer></script>
+<script src="~/Scripts/compiled/validation.js" defer></script>

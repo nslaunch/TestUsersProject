@@ -1,0 +1,17 @@
+{
+    "compilerOptions": {
+      "target": "es5",
+      "outDir": "./Scripts/compiled",
+      "rootDir": "./Scripts",
+      "strict": true,
+      "sourceMap": true,
+      "typeRoots": ["node_modules/@types"]
+    },
+    "include": [
+        "Scripts/**/*.ts"  // Include all .ts files in the Scripts folder and subfolders
+    ],
+    "exclude": [
+      "node_modules" // Exclude only this folder
+    ]
+  }
+  

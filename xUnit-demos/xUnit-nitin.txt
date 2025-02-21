@@ -1,0 +1,77 @@
+shared context 
+parallelism
+//AAA
+Mocking
+Assertions
+
+
+--Shared Context between Tests--
+1. constructor and dispose
+When to use: when you want a clean test context for every test (sharing the setup and cleanup code, without sharing the object instance). 
+how the objects are created and disposed
+check if it is deleting all the records
+
+2. class fixture
+when to use: when you want to create a single test context and share it among all the tests in the class, and have it cleaned up after all the tests in the class have finished.
+shared objects, data between tests, dispose executed in end
+ 
+3. collection fixture
+When to use: when you want to create a single test context and share it among tests in several test classes, and have it cleaned up after all the tests in the test classes have finished. 
+
+execute
+EmployeeCollectionTests
+CollectionTests
+
+check if it is deleting all the records, pause at dispose
+check database tables
+
+--Running tests in parallel--
+Runs sequentially in same collection
+Runs sequentially in same class
+Runs Parallel when in different classes or collection
+
+xunit.runner.json
+
+execute in VSTest
+execute in Console Runner
+
+--Arrange Act Assert--
+AAA is a pattern for writing unit tests that separates the test into three steps:
+
+//Arrange
+setup the testing objects and prepare the prerequisites for your test.
+
+//Act
+perform the actual work of the test.
+
+//Assert
+verify the result.
+
+--Mocking using Moq--
+creating dummy objects based upon your application's real objects and then using those dummy objects to simulate the behavior of your real objects in various conditions
+
+Setup
+You can setup the behavior of any of a mock's overridable methods using Setup, combined with e.g. Returns (so they return a value) or Throws (so they throw an exception
+
+--Passing data to tests--
+inlinedata
+classdata
+memberdata
+
+pass multiple records
+
+--Fluent Assertions--
+write readable and maintainable assertions in unit tests
+https://methodpoet.com/fluent-assertions/
+
+Assert.Equal("9780321146533", book.ISBN);
+Assert.Equal('3', book.ISBNCheckDigit);
+Assert.Equal("Kent Beck", book.Author);
+Assert.Equal("Test Driven Development: By Example", book.Name);
+
+book.ISBN.Should().Be("9780321146533");
+book.ISBNCheckDigit.Should().Be('3');
+book.Author.Should().Be("Kent Beck");
+book.Name.Should().Be("Test Driven Development: By Example");
+
+why we use that, how to use that

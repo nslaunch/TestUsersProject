@@ -1,0 +1,199 @@
+﻿@model IEnumerable<EmployeeManagementApp.ViewModels.EmployeeDepartmentViewModel>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    int i = 1;
+    var departments = ViewBag.Departments as List<EmployeeManagementApp.Models.Department>;
+    var bloodGroups = new List<string> { "A+", "B+", "AB+", "O+", "A-", "B-", "O-" };
+}
+
+
+<style>
+    #loader {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.7);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 9999;
+        color: white;
+        font-size: xx-large;
+    }
+    /* Add gradient background */
+    .k-button.k-primary.k-button-raised {
+        background: linear-gradient(45deg, #007bff, #0056b3);
+        color: white;
+        font-size: medium;
+        border: none;
+        border-radius: 4px;
+        padding: 5px 20px;
+        font-weight: bold;
+        transition: all 0.3s ease;
+        box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.16);
+    }
+
+        /* Add hover effect */
+        .k-button.k-primary.k-button-raised:hover {
+            background: linear-gradient(45deg, #0056b3, #003f8c);
+            transform: scale(1.05);
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Add focus effect */
+        .k-button.k-primary.k-button-raised:focus {
+            outline: none;
+            border: 2px solid #0056b3;
+        }
+</style>
+<link href="~/Scripts/classic-main-dark.css" rel="stylesheet" />
+<link href="~/Scripts/default-main.css" rel="stylesheet" />
+
+<div id="loader">
+    <div class="spinner-border text-secondary" role="status">
+        <span class="visually-hidden">Loading...</span>
+    </div>
+</div>
+@*<div id="loader">
+        <div class="custom-spinner"></div>
+    </div>*@
+
+
+<h2>Employee Information</h2>
+<hr />
+
+<br />
+<div id="employeeGrid" data-employee-data='@Html.Raw(Json.Encode(Model))'></div>
+
+<table class="table" id="employeeTable">
+    <thead>
+        <tr>
+            <th>Sr. No</th>
+            <th>Employee Name</th>
+            <th>Designation</th>
+            <th>National ID</th>
+            <th>Joining Date</th>
+            <th>Code</th>
+            <th>Department</th>
+            <th>Blood Group</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var employee in Model)
+        {
+            <tr data-employee-id="@employee.EmployeeId">
+                <td>@i</td>
+                <td>
+                    <span class="view-mode">@employee.EmployeeName</span>
+                    <input type="text" class="edit-mode form-control" value="@employee.EmployeeName" style="display:none;" />
+                </td>
+                <td>
+                    <span class="view-mode">@employee.Designation</span>
+                    <input type="text" class="edit-mode form-control" value="@employee.Designation" style="display:none;" />
+                </td>
+                <td>
+                    <span class="view-mode">@employee.NID</span>
+                    <input type="text" class="edit-mode form-control" value="@employee.NID" style="display:none;" />
+                </td>
+                <td>
+                    <span class="view-mode">@employee.JoiningDate.ToShortDateString()</span>
+                    <input type="date" class="edit-mode form-control" value="@employee.JoiningDate.ToString("yyyy-MM-dd")" style="display:none;" />
+                </td>
+                <td>
+                    <span class="view-mode">@employee.Code</span>
+                    <input type="text" class="edit-mode form-control" value="@employee.Code" style="display:none;" />
+                </td>
+                <td>
+                    <span class="view-mode">@employee.DepartmentName</span>
+                    <select class="edit-mode form-control" style="display:none;">
+                        <option value="0">-Select-</option>
+                        @foreach (var department in departments)
+                        {
+                            <option value="@department.DepartmentId" @(department.DepartmentId == employee.DepartmentId ? "selected" : "")>
+                                @department.Name
+                            </option>
+                        }
+                    </select>
+                </td>
+                <td>
+                    <span class="view-mode">@employee.BloodGroup</span>
+                    <select class="edit-mode form-control" style="display:none;">
+                        <option value="0">-Select-</option>
+                        @foreach (var group in bloodGroups)
+                        {
+                            <option value="@group" @(group == employee.BloodGroup ? "selected" : "")>@group</option>
+                        }
+                    </select>
+                </td>
+                <td style="width: 200px;">
+                    <button class="k-button k-primary k-button-raised edit-btn">Edit</button>
+                    <button class="btn btn-success save-btn" style="display:none;">Save</button>
+                    <a href="@Url.Action("Delete", "Employee", new { id = employee.EmployeeId })" class="btn btn-danger delete-btn">Delete</a>
+                </td>
+            </tr>
+            i++;
+        }
+    </tbody>
+</table>
+<div style="height:100px">
+
+</div>
+<script src="https://code.jquery.com/jquery-3.4.1.min.js" defer></script>
+
+
+@* $(document).ready(function () {
+      // Retrieve employee data from the Razor view
+      console.log($('#employeeGrid').attr('data-employee-data'));
+      console.log(@Html.Raw(Json.Encode(Model)));
+
+      const employeeData = JSON.parse($('#employeeGrid').attr('data-employee-data'));
+
+      // Initialize the Kendo Grid with the employee data
+      $("#employeeGrid").kendoGrid({
+        dataSource: {
+          data: employeeData,  // Use the dynamic data from Razor
+          pageSize: 10,        // Items per page
+        },
+        pageable: true,        // Enable pagination
+        sortable: true,        // Enable sorting
+        filterable: true,      // Enable filtering
+        columns: [
+          { field: "EmployeeName", title: "Employee Name" },
+          { field: "Designation", title: "Designation" },
+          { field: "NID", title: "National ID" },
+          { field: "JoiningDate", title: "Joining Date", format: "{0:yyyy-MM-dd}" },
+          { field: "Code", title: "Code" },
+          { field: "DepartmentName", title: "Department" },
+          { field: "BloodGroup", title: "Blood Group" },
+          {
+            command: [
+              { name: "edit", text: "Edit" },
+              { name: "destroy", text: "Delete" }
+            ],
+            title: "Actions",
+            width: "180px"
+          }
+        ],
+        editable: {
+          mode: "popup",  // Open a popup editor for editing employees
+          confirmation: "Are you sure you want to delete this employee?", // Confirm before deletion
+        }
+      });
+    }); *@
+
+
+<script src="https://code.jquery.com/jquery-3.4.1.min.js" defer></script>
+<script src="https://unpkg.com/jszip/dist/jszip.min.js"></script>
+
+<script src="~/Scripts/kendo.all.min.js" defer></script>
+<script src="~/Scripts/kendo-ui-license.js" defer></script>
+
+
+@*<script src="~/Scripts/Employee.js" defer></script>*@
+<script src="~/instrumented/Scripts/Employee.js" defer></script>
+
+@*<script src="~/Scripts/compiled/kendogrid.js" defer></script>*@

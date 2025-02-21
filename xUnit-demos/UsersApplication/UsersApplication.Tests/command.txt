@@ -1,0 +1,18 @@
+dotnet test -p:CollectCoverage=true -p:CoverletOutput=TestResults/ -p:CoverletOutputFormat=cobertura --verbosity normal --logger "html;logfilename=TestResults.html"
+
+install report generator tool
+dotnet tool install -g dotnet-reportgenerator-globaltool
+
+reportgenerator -reports:"TestResults\coverage.cobertura.xml" -targetdir:"TestResults" -reporttypes:Html
+
+DATA COLLECTOR
+https://github.com/Microsoft/vstest-docs/blob/main/docs/extensions/datacollector.md
+
+Coverlet
+https://github.com/coverlet-coverage/coverlet
+
+Fine Code Coverage
+https://marketplace.visualstudio.com/items?itemName=FortuneNgwenya.FineCodeCoverage
+
+
+

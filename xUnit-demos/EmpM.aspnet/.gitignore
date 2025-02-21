@@ -1,0 +1,8 @@
+.vs
+/obj
+/obj/Debug
+/bin
+/packages
+/node_modules
+/kendo-ui-core-master
+/kendoui.for.jquery.2024.4.1112.trial
