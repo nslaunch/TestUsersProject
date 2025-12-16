@@ -2,7 +2,7 @@
 {
     public class SimpleContainer<T>
     {
-        public T Instance { get; set; }
+        public T? Instance { get; set; }
     }
 
     public class DeepContainer<T>:SimpleContainer<DeepContainer<SimpleContainer<T>>>
